@@ -15,6 +15,7 @@
     "cloudinary": "^2.4.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.5.2",
     "multer": "^1.4.5-lts.1",
     "puppeteer": "^22.15.0",
@@ -27,5 +28,11 @@
     "@types/node": "^22.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "_moduleAliases": {
+    "@medial/controllers": "dist/controllers",
+    "@medial/routes": "dist/routes",
+    "@medial/utils": "dist/utils",
+    "@medial/lib": "dist/lib"
   }
 }
