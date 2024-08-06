@@ -3,6 +3,7 @@ import cors from 'cors';
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
 import { createCanvas, loadImage } from 'canvas';
+import { CLOUDNERY_API_KEY, CLOUDNERY_API_SECRET, CLOUDNERY_CLOUD_NAME } from './config';
  
 
 
@@ -14,9 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 cloudinary.config({
-  cloud_name: 'dajjk6jl1',
-  api_key: '419941971342633',
-  api_secret: '2qo51Bszn9s9o1hSN5FdAqA2fEw'
+  cloud_name: CLOUDNERY_CLOUD_NAME,
+  api_key: CLOUDNERY_API_KEY,
+  api_secret: CLOUDNERY_API_SECRET
 });
 
 const storage = multer.memoryStorage();
