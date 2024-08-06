@@ -82,3 +82,22 @@ Here is what you need to be able to run Medial_OG
 
           - npm run start:dev   on Banckend
           - npm run dev         on Frontend
+
+
+##  How It works 
+
+# Flow Summary
+```bash
+l. User Interanction
+    - User inputs title and content, uploads an image if needed.
+    - Clicks the submit button to generate an OG image.
+2. Frontend Actions:
+   -  Image is uploaded to the backend using the cloudnary.
+   -  Form data is sent to the backend for OG image generation.
+   -  Displays toast notifications based on the success or failure of operations.
+3. Backend Actions:
+    - Handles image upload and storage.
+    - Generates the OG image using canvas and returns its URL.
+4. Result Display:
+    - The frontend updates with the OG image URL and displays the with redit post design with og url .
+```
