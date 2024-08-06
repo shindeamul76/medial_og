@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="/assets/medial-logo.webp"  width="200" height="200" alt="Medial-logo" />
+  <img src="/assets/medial-logo.jpg"  width="200" height="200" alt="Medial-logo" />
 
   <h1>Dynamic Post Page with OG Image Generation</h1>
 
@@ -19,10 +19,10 @@
 
 - Generate Dynamic Open Graph Images.
 - Frontend in React and Banckend in Nodejs express.
-- All services will be run on the docker container
+- All services locally
 - deployed 
 ```bash
-   (https://medial-og.netlify.app/)
+        https://medial-og.netlify.app/
 ```
 
 ## Built With
