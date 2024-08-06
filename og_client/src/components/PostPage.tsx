@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react'; 
 import RedditPost from './RedditPost';
+import { useToast } from './ui/use-toast';
 
 const PostPage: React.FC = () => {
   const [title, setTitle] = useState<string>('');
@@ -16,15 +17,31 @@ const PostPage: React.FC = () => {
   const [ogImageUrl, setOgImageUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { toast } = useToast();
+
   const handleImageUpload = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append('image', file);
-    const response = await axios.post<{ url: string }>(`${BACKEND_URL}/upload`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    return response.data.url;
+    try {
+      const response = await axios.post(`${BACKEND_URL}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      toast({
+        title: 'File uploaded successfully',
+        description: 'Your image has been uploaded.',
+        variant: 'default',
+      });
+      return response.data.data.url;
+    } catch (error) {
+      toast({
+        title: 'File upload failed',
+        description: 'An error occurred while uploading the file. Please try again.',
+        variant: 'destructive',
+      });
+      throw new Error("File upload failed");
+    }
   };
 
   const handleSubmit = async (): Promise<void> => {
@@ -34,20 +51,40 @@ const PostPage: React.FC = () => {
       if (image) {
         imageUrl = await handleImageUpload(image);
       }
+      
       const ogImageUrl = await generateOgImage(title, content, imageUrl);
       setOgImageUrl(ogImageUrl);
       setTitle('');
       setContent('');
       setImage(null);
-      
+      toast({
+        title: 'OG Image Generated',
+        description: 'The Open Graph image has been generated successfully.',
+        variant: 'default',
+      });
+    } catch (error) {
+      toast({
+        title: 'Operation failed',
+        description: 'An error occurred while generating the Open Graph image. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false); 
     }
   };
 
   const generateOgImage = async (title: string, content: string, imageUrl: string): Promise<string> => {
-    const response = await axios.post<{ url: string }>(`${BACKEND_URL}/generate-og-image`, { title, content, imageUrl });
-    return response.data.url;
+    try {
+      const response = await axios.post(`${BACKEND_URL}/generate-og-image`, { title, content, imageUrl });
+      return response.data.data.url;
+    } catch (error) {
+      toast({
+        title: 'OG Image Generation Failed',
+        description: 'An error occurred while generating the Open Graph image.',
+        variant: 'destructive',
+      });
+      throw new Error("OG image generation failed");
+    }
   };
 
   useEffect(() => {
@@ -86,7 +123,6 @@ const PostPage: React.FC = () => {
       }
     }
   }, [ogImageUrl, redTitle, redContent]);
-  
 
   return (
     <div className="p-4 max-w-xl mx-auto">
@@ -106,7 +142,9 @@ const PostPage: React.FC = () => {
       <Input
         type="file"
         className="block w-full p-2 mb-4 border"
-        onChange={(e) => setImage(e.target.files?.[0] || null)}
+        onChange={(e) => {
+          setImage(e.target.files?.[0] || null);
+        }}
       />
       <Button
         className="px-4 py-2 bg-teal-500 text-white flex items-center justify-center"

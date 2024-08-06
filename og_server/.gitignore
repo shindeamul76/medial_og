@@ -1,2 +1,17 @@
-node_modules
+# Node.js
+/node_modules
+
+# TypeScript
+/dist
+
+# IDE files
+.vscode/
+.idea/
+
+# Docker
+.DS_Store
+docker-compose.override.yml
+docker-compose.override.yml.example
+
+# Environment variables
 .env
