@@ -42,7 +42,7 @@ const getHealth = async (req, res) => {
 
 setInterval(() => {   
   getHealth(null, null);
-}, 180000);
+}, 60000);
 
 
 app.get('/_health', (req: Request, res: Response) => {
