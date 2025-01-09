@@ -32,6 +32,18 @@ app.get('/success', (req: Request, res: Response) => {
   res.status(200).json({ message: 'Loggged In Successfully' });
 });
 
+const getHealth = async (req, res) => {
+  try {
+    const response = await axios.get('https://um-ai-task.onrender.com/sysetem/health/');
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+setInterval(() => {   
+  getHealth(null, null);
+}, 180000);
+
 
 app.get('/_health', (req: Request, res: Response) => {
   return res.status(200).json({
